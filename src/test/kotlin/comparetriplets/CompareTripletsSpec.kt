@@ -13,11 +13,11 @@ object CompareTripletsSpec : Spek ({
         on("equivalent results in every category") {
             val (alice, bob) = compareTriplets(arrayOf(5, 10, 15), arrayOf(5, 10, 15))
 
-            it("should give Alice's 0 points") {
+            it("should give Alice 0 points") {
                 assertEquals(0, alice)
             }
 
-            it("should give Bob's 0 points") {
+            it("should give Bob 0 points") {
                 assertEquals(0, bob)
             }
         }
