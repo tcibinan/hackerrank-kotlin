@@ -12,14 +12,12 @@ fun main(args: Array<String>) {
     println("$a $b")
 }
 
-fun compare(aliceTriplet: Array<Int>, bobTriplet: Array<Int>): Pair<Int, Int> {
-    var alice = 0
-    var bob = 0
-    for (i in 0..2) {
-        if (aliceTriplet[i] > bobTriplet[i])
-            alice++
-        else if (aliceTriplet[i] < bobTriplet[i])
-            bob++
-    }
-    return Pair(alice, bob)
-}
+fun compare(aliceTriplet: Array<Int>, bobTriplet: Array<Int>): Pair<Int, Int> =
+        aliceTriplet
+                .mapIndexed { i, a -> Pair(a, bobTriplet[i]) }
+                .fold(Pair(0, 0)) { acc, pair ->
+                    acc.copy(
+                            if (pair.first > pair.second) acc.first + 1 else acc.first,
+                            if (pair.first < pair.second) acc.second + 1 else acc.second
+                    )
+                }
