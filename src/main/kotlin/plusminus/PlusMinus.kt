@@ -7,7 +7,7 @@ fun main(args: Array<String>) {
 
     val nums = Array(scan.nextInt()) { scan.nextInt() }
 
-    plusMinusZeros(nums).toList().forEach { println { "%.6d".format(it) } }
+    plusMinusZeros(nums).toList().forEach { println("%.6f".format(it)) }
 }
 
 fun plusMinusZeros(nums: Array<Int>): Triple<Double, Double, Double> =
