@@ -5,17 +5,18 @@ import org.jetbrains.spek.api.dsl.describe
 import org.jetbrains.spek.api.dsl.it
 import org.jetbrains.spek.api.dsl.on
 import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 object PlusMinusSpek : Spek({
     describe("getting counts of positives, negatives and zero values") {
         val plusMinusZeros = ::plusMinusZeros
-        var array : Array<Int>
+        var array: Array<Int>
 
         on("empty array") {
             array = emptyArray()
 
             it("should return three zeros") {
-                assertEquals(Triple(0.0,0.0,0.0), plusMinusZeros(array))
+                assertEquals(Triple(0.0, 0.0, 0.0), plusMinusZeros(array))
             }
         }
 
@@ -36,7 +37,7 @@ object PlusMinusSpek : Spek({
         }
 
         on("array of zeros") {
-            array = arrayOf(0,0,0)
+            array = arrayOf(0, 0, 0)
 
             it("should return 1.0 as third parameter") {
                 assertEquals(1.0, plusMinusZeros(array).third)
@@ -45,13 +46,22 @@ object PlusMinusSpek : Spek({
 
         on("custom array") {
             array = arrayOf(-4, 3, -9, 0, 4, 1)
+            val (a, b, c) = plusMinusZeros(array)
 
             it("should return parameters with sum of them equals to 1") {
-                assertEquals(1.0, plusMinusZeros(array).toList().sum())
+                assertTrue { (0.999999..1.0).contains(arrayOf(a, b, c).sum()) }
             }
 
-            it("should return percentages of positive, negative and zero values in the array") {
-                assertEquals(Triple(0.500000, 0.333333,0.166667), plusMinusZeros(array))
+            it("should return percentages of positive values in the array") {
+                assertTrue { (0.499999..0.500000).contains(a) }
+            }
+
+            it("should return percentages of negative values in the array") {
+                assertTrue { (0.333332..0.333334).contains(b) }
+            }
+
+            it("should return percentages of zero values in the array") {
+                assertTrue { (0.166666..0.166667).contains(c) }
             }
         }
     }
