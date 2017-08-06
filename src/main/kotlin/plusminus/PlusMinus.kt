@@ -7,9 +7,21 @@ fun main(args: Array<String>) {
 
     val nums = Array(scan.nextInt()) { scan.nextInt() }
 
-    plusMinusZeros(nums).toList().forEach(::println)
+    plusMinusZeros(nums).toList().forEach { println { "%.6d".format(it) } }
 }
 
-fun plusMinusZeros(nums: Array<Int>): Triple<Double, Double, Double> {
-    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-}
+fun plusMinusZeros(nums: Array<Int>): Triple<Double, Double, Double> =
+        nums
+                .fold(Triple(0.0, 0.0, 0.0)) { acc, num ->
+                    if (num > 0)
+                        Triple(acc.first + 1, acc.second, acc.third)
+                    else if (num < 0)
+                        Triple(acc.first, acc.second + 1, acc.third)
+                    else
+                        Triple(acc.first, acc.second, acc.third + 1)
+                }
+                .let {
+                    val size = if (nums.isEmpty()) 1 else nums.size
+                    Triple(it.first / size, it.second / size, it.third / size)
+                }
+
