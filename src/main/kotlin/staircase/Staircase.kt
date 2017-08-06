@@ -10,8 +10,11 @@ fun main(args: Array<String>) {
     println(getStaircase(n))
 }
 
-fun getStaircase(stairs: Int) : String {
-    return (1..stairs).fold(String()) { s, i ->
-        s+"${" ".repeat(stairs-i)}${"#".repeat(i)}\n"
-    }.removeSuffix("\n")
+fun getStaircase(stairs: Int): String {
+    return (1..stairs)
+            .fold(StringBuilder()) { sb, i ->
+                sb.append("${" ".repeat(stairs - i)}${"#".repeat(i)}\n")
+            }
+            .removeSuffix("\n")
+            .toString()
 }
