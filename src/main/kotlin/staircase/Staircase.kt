@@ -13,5 +13,5 @@ fun main(args: Array<String>) {
 fun getStaircase(stairs: Int) : String {
     return (1..stairs).fold(String()) { s, i ->
         s+"${" ".repeat(stairs-i)}${"#".repeat(i)}\n"
-    }
+    }.removeSuffix("\n")
 }
