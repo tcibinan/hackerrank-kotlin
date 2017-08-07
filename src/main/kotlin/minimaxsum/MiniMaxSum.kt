@@ -4,9 +4,10 @@ import java.util.*
 
 fun main(args: Array<String>) {
     val scanner = Scanner(System.`in`)
-    println(miniMaxSum(Array(5, {scanner.nextInt()})))
+    val (a, b) = miniMaxSum(Array(5) { scanner.nextInt() })
+    println("$a $b")
 }
 
-fun miniMaxSum(nums : Array<Int>) : Long {
+fun miniMaxSum(nums : Array<Int>) : Pair<Long, Long> {
     TODO("Implement")
 }
