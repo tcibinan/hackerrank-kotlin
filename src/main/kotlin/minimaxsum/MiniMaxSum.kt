@@ -8,6 +8,9 @@ fun main(args: Array<String>) {
     println("$a $b")
 }
 
-fun miniMaxSum(nums : Array<Int>) : Pair<Long, Long> {
-    TODO("Implement")
-}
+fun miniMaxSum(nums: Array<Int>): Pair<Long, Long> =
+        nums.sortedArray().foldIndexed(Pair(0L, 0L)) { index, acc, int ->
+            if (index == 0) Pair(int.toLong(), 0L)
+            else if (index == nums.size - 1) Pair(acc.first, acc.second + int)
+            else Pair(acc.first + int, acc.second + int)
+        }
