@@ -14,3 +14,10 @@ fun miniMaxSumFunctional(nums: Array<Int>): Pair<Long, Long> =
             else if (index == nums.size - 1) Pair(acc.first, acc.second + int)
             else Pair(acc.first + int, acc.second + int)
         }
+
+fun miniMaxSumDefault(nums: Array<Int>) : Pair<Long, Long> {
+    val sortedArray = nums.sortedArray().map(Int::toLong)
+    val sum = sortedArray.sum()
+
+    return Pair(sum - sortedArray.last(), sum - sortedArray.first())
+}
