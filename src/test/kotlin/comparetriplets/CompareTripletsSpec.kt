@@ -1,48 +1,38 @@
 package comparetriplets
 
-import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.describe
 import org.jetbrains.spek.api.dsl.it
-import org.jetbrains.spek.api.dsl.on
+import org.jetbrains.spek.data_driven.data
+import org.jetbrains.spek.data_driven.on
+import org.jetbrains.spek.subject.SubjectSpek
 import kotlin.test.assertEquals
 
-object CompareTripletsSpec : Spek ({
+object CompareTripletsSpec : SubjectSpek<(Array<Int>, Array<Int>) -> Pair<Int, Int>>({
     describe("a triplets comparator") {
-        val compareTriplets = ::compare
+        subject { ::compareTriplets }
 
-        on("equivalent results in every category") {
-            val (alice, bob) = compareTriplets(arrayOf(5, 10, 15), arrayOf(5, 10, 15))
+        val dataWithTriplets = arrayOf(
+                data("10, 20, 30", "10, 20, 30",
+                        Pair(arrayOf(10, 20, 30), arrayOf(10, 20, 30)),
+                        expected = Pair(0,0)),
+                data("100, 100, 100", "10, 10, 10",
+                        Pair(arrayOf(100, 100, 100), arrayOf(10, 10, 10)),
+                        expected = Pair(3,0)),
+                data("100, 10, 10", "10, 100, 100",
+                        Pair(arrayOf(100, 10, 10), arrayOf(10, 100, 100)),
+                        expected = Pair(1,2))
+        )
 
-            it("should give Alice 0 points") {
-                assertEquals(0, alice)
+        on("triplets %s for Alice and %s for Bob",
+                *dataWithTriplets) { _, _, (aliceTriplet, bobTriplet), (first, second) ->
+            val (alice, bob) = subject(aliceTriplet, bobTriplet)
+
+            it("should give Alice ${first} points") {
+                assertEquals(first, alice)
             }
 
-            it("should give Bob 0 points") {
-                assertEquals(0, bob)
-            }
-        }
-
-        on("Alice win in every category") {
-            val (alice, bob) = compareTriplets(arrayOf(10, 20, 30), arrayOf(5, 15, 25))
-
-            it("should give Alice all points") {
-                assertEquals(3, alice)
-            }
-
-            it("should give Bob no points") {
-                assertEquals(0, bob)
-            }
-        }
-
-        on("Alice win in one category and Bob win in two categories") {
-            val (alice, bob) = compareTriplets(arrayOf(20, 10, 10), arrayOf(10, 20, 20))
-
-            it("should give Alice 1 point") {
-                assertEquals(1, alice)
-            }
-
-            it("should give Bob 2 points") {
-                assertEquals(2, bob)
+            it("should give Bob ${second} points") {
+                assertEquals(second, bob)
             }
         }
     }

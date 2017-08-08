@@ -5,14 +5,14 @@ import java.util.*
 fun main(args: Array<String>) {
     val scan = Scanner(System.`in`)
 
-    val (a, b) = compare(
+    val (a, b) = compareTriplets(
             Array(3, { scan.nextInt() }),
             Array(3, { scan.nextInt() })
     )
     println("$a $b")
 }
 
-fun compare(aliceTriplet: Array<Int>, bobTriplet: Array<Int>): Pair<Int, Int> =
+fun compareTriplets(aliceTriplet: Array<Int>, bobTriplet: Array<Int>): Pair<Int, Int> =
         aliceTriplet
                 .mapIndexed { i, a -> Pair(a, bobTriplet[i]) }
                 .fold(Pair(0, 0)) { acc, pair ->

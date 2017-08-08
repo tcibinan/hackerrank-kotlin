@@ -11,10 +11,10 @@ class MiniMaxSumFunctionalImplSpec : SubjectSpek<(Array<Int>) -> Pair<Long, Long
     subject { ::miniMaxSumFunctional }
 
     val dataWithVariousNumbersInArrays = arrayOf(
-            data(arrayOf(1, 2, 3, 4, 5), Pair(10L, 14L)),
-            data(arrayOf(5, 4, 3, 2, 1), Pair(10L, 14L)),
-            data(arrayOf(5, 0, 0, 0, 0), Pair(0L, 5L)),
-            data(arrayOf(5, 5, 5, 5, 10), Pair(20L, 25L)))
+            data("1, 2, 3, 4, 5", arrayOf(1, 2, 3, 4, 5), Pair(10L, 14L)),
+            data("5, 4, 3, 2, 1", arrayOf(5, 4, 3, 2, 1), Pair(10L, 14L)),
+            data("5, 0, 0, 0, 0", arrayOf(5, 0, 0, 0, 0), Pair(0L, 5L)),
+            data("5, 5, 5, 5, 10", arrayOf(5, 5, 5, 5, 10), Pair(20L, 25L)))
 
     val dataWithSingleNumbers = arrayOf(
             data(0, 0L),
@@ -30,9 +30,9 @@ class MiniMaxSumFunctionalImplSpec : SubjectSpek<(Array<Int>) -> Pair<Long, Long
             }
         }
 
-        on("array of different dataWithSingleNumbers: %s",
+        on("array of %s",
                 *dataWithVariousNumbersInArrays
-        ) { array, expected ->
+        ) { _, array, expected ->
             it("should return ${expected.first} as a mins sum and ${expected.second} as a maxs sums") {
                 Assert.assertEquals(expected, subject(array))
             }
