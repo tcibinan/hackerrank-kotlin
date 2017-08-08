@@ -10,22 +10,28 @@ import org.junit.Assert
 class MiniMaxSumFunctionalImplSpec : SubjectSpek<(Array<Int>) -> Pair<Long, Long>>({
     subject { ::miniMaxSumFunctional }
 
+    val dataWithVariousNumbersInArrays = arrayOf(
+            data(arrayOf(1, 2, 3, 4, 5), Pair(10L, 14L)),
+            data(arrayOf(5, 4, 3, 2, 1), Pair(10L, 14L)),
+            data(arrayOf(5, 0, 0, 0, 0), Pair(0L, 5L)),
+            data(arrayOf(5, 5, 5, 5, 10), Pair(20L, 25L)))
+
+    val dataWithSingleNumbers = arrayOf(
+            data(0, 0L),
+            data(5, 20L))
+
     describe("calculation min and max sums") {
 
         on("array of five %s's",
-                data(0, Pair(0L, 0L)),
-                data(5, Pair(20L, 20L))
-        ) { num, expected ->
-            it("should return ${expected.first} as a mins and maxs sums") {
-                Assert.assertEquals(expected, subject(Array(5) { num }))
+                *dataWithSingleNumbers
+        ) { num, expectedSum ->
+            it("should return $expectedSum as a mins and maxs sums") {
+                Assert.assertEquals(Pair(expectedSum, expectedSum), subject(Array(5) { num }))
             }
         }
 
-        on("array of different numbers: %s",
-                data(arrayOf(1, 2, 3, 4, 5), Pair(10L, 14L)),
-                data(arrayOf(5, 4, 3, 2, 1), Pair(10L, 14L)),
-                data(arrayOf(5, 0, 0, 0, 0), Pair(0L, 5L)),
-                data(arrayOf(5, 5, 5, 5, 10), Pair(20L, 25L))
+        on("array of different dataWithSingleNumbers: %s",
+                *dataWithVariousNumbersInArrays
         ) { array, expected ->
             it("should return ${expected.first} as a mins sum and ${expected.second} as a maxs sums") {
                 Assert.assertEquals(expected, subject(array))
