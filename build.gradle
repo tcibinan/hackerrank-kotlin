@@ -27,6 +27,7 @@ dependencies {
             "org.jetbrains.kotlin:kotlin-test:$kotlinVersion",
             "org.jetbrains.spek:spek-api:$spekVersion",
             "org.jetbrains.spek:spek-data-driven-extension:$spekVersion",
+            "org.jetbrains.spek:spek-subject-extension:$spekVersion",
             "org.jetbrains.spek:spek-junit-platform-engine:$spekVersion"
 }
 

@@ -1,24 +1,23 @@
 package minimaxsum
 
-import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.describe
 import org.jetbrains.spek.api.dsl.it
 import org.jetbrains.spek.data_driven.data
 import org.jetbrains.spek.data_driven.on
+import org.jetbrains.spek.subject.SubjectSpek
+import org.junit.Assert
 
-import org.junit.Assert.*
+class MiniMaxSumFunctionalImplSpec : SubjectSpek<(Array<Int>) -> Pair<Long, Long>>({
+    subject { ::miniMaxSumFunctional }
 
-class MiniMaxSumSpec : Spek({
     describe("calculation min and max sums") {
-
-        val miniMaxSum = ::miniMaxSumFunctional
 
         on("array of five %s's",
                 data(0, Pair(0L, 0L)),
                 data(5, Pair(20L, 20L))
         ) { num, expected ->
             it("should return ${expected.first} as a mins and maxs sums") {
-                assertEquals(expected, miniMaxSum(Array(5) { num }))
+                Assert.assertEquals(expected, subject(Array(5) { num }))
             }
         }
 
@@ -29,7 +28,7 @@ class MiniMaxSumSpec : Spek({
                 data(arrayOf(5, 5, 5, 5, 10), Pair(20L, 25L))
         ) { array, expected ->
             it("should return ${expected.first} as a mins sum and ${expected.second} as a maxs sums") {
-                assertEquals(expected, miniMaxSum(array))
+                Assert.assertEquals(expected, subject(array))
             }
         }
     }
