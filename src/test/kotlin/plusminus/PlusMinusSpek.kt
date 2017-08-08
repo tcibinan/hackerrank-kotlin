@@ -13,7 +13,7 @@ class PlusMinusSpek : SubjectSpek<(Array<Int>) -> Triple<Double, Double, Double>
     describe("getting counts of positives, negatives and zero values") {
         subject { ::plusMinusZeros }
         var array: Array<Int>
-        fun rangeWithPrecision(s : Double, p : Double) = (s..s+p)
+        fun rangeWithPrecision(s: Double, p: Double) = (s..s + p)
 
         on("empty array") {
             array = emptyArray()
@@ -23,33 +23,12 @@ class PlusMinusSpek : SubjectSpek<(Array<Int>) -> Triple<Double, Double, Double>
             }
         }
 
-        on("positive array") {
-            array = arrayOf(1, 2, 3)
-
-            it("should return 1.0 as first parameter") {
-                assertEquals(1.0, subject(array).first)
-            }
-        }
-
-        on("negative array") {
-            array = arrayOf(-1, -2, -3)
-
-            it("should return 1.0 as second parameter") {
-                assertEquals(1.0, subject(array).second)
-            }
-        }
-
-        on("array of zeros") {
-            array = arrayOf(0, 0, 0)
-
-            it("should return 1.0 as third parameter") {
-                assertEquals(1.0, subject(array).third)
-            }
-        }
-
-        on("custom array",
-                data(arrayOf(-4, 3, -9, 0, 4, 1), expected = Triple(0.499999, 0.333333, 0.166666)))
-        { array, expected ->
+        on("array of %s",
+                data("-4, 3, -9, 0, 4, 1", arrayOf(-4, 3, -9, 0, 4, 1), expected = Triple(0.499999, 0.333333, 0.166666)),
+                data("0, 0, 0", arrayOf(0, 0, 0), expected = Triple(0.0, 0.0, 1.0)),
+                data("-1, -2, -3", arrayOf(-1, -2, -3), expected = Triple(0.0, 1.0, 0.0)),
+                data("1, 2, 3", arrayOf(1, 2, 3), expected = Triple(1.0, 0.0, 0.0)))
+        { _, array, expected ->
             val results = subject(array)
             val precision = 0.000001
 
@@ -57,16 +36,16 @@ class PlusMinusSpek : SubjectSpek<(Array<Int>) -> Triple<Double, Double, Double>
                 assertTrue { rangeWithPrecision(0.999999, precision).contains(results.toList().sum()) }
             }
 
-            it("should return percentages of positive values in the array") {
-                assertTrue { rangeWithPrecision(results.first, precision).contains(results.first) }
+            it("should return ~${Math.round(results.first * 100)}% for positive values") {
+                assertTrue { rangeWithPrecision(expected.first, precision).contains(results.first) }
             }
 
-            it("should return percentages of negative values in the array") {
-                assertTrue { rangeWithPrecision(results.second, precision).contains(results.second) }
+            it("should return ~${Math.round(results.second * 100)}% for negative values") {
+                assertTrue { rangeWithPrecision(expected.second, precision).contains(results.second) }
             }
 
-            it("should return percentages of zero values in the array") {
-                assertTrue { rangeWithPrecision(results.third, precision).contains(results.third) }
+            it("should return ~${Math.round(results.third * 100)}% for zero values") {
+                assertTrue { rangeWithPrecision(expected.third, precision).contains(results.third) }
             }
         }
     }
